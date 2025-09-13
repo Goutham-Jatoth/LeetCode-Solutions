@@ -1,0 +1,73 @@
+class Solution {
+    public int myAtoi(String s) {
+        StringBuilder res = new StringBuilder();
+        char[] arr = s.toCharArray();
+        int count = 0;
+
+        // Step 1: Skip leading whitespaces
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == ' ') {
+                count++;
+            } else {
+                break;
+            }
+        }
+
+        // If string has only spaces
+        if (count >= s.length()) return 0;
+
+        // Step 2: Handle sign
+        String check = s.substring(count, count + 1);
+        if (check.equals("-") || check.equals("+")) {
+            res.append(check);
+            count++;
+        }
+
+        // Step 3: Append digits only from the current index
+        for (int i = count; i < arr.length; i++) {
+            char ch = arr[i];
+            if (!Character.isDigit(ch)) {
+                break;
+            }
+            res.append(ch);
+        }
+
+        // Step 4: Handle invalid cases like "+" or "-" only
+        String ans = res.toString();
+        if (ans.equals("+") || ans.equals("-") || ans.isEmpty()) {
+            return 0;
+        }
+
+        // Step 5: Remove leading zeros after the sign (if any)
+        StringBuilder sol = new StringBuilder();
+        int start = (ans.charAt(0) == '+' || ans.charAt(0) == '-') ? 1 : 0;
+
+        // Skip leading zeros
+        while (start < ans.length() && ans.charAt(start) == '0') {
+            start++;
+        }
+
+        // If all digits were zeros, keep one '0'
+        if (start == ans.length()) {
+            sol.append('0');
+        } else {
+            sol.append(ans.substring(start));
+        }
+
+        // Prepend sign if it was there
+        if (ans.charAt(0) == '-' || ans.charAt(0) == '+') {
+            sol.insert(0, ans.charAt(0));
+        }
+
+        // Step 6: Parse with bounds handling
+        try {
+            return Integer.parseInt(sol.toString());
+        } catch (NumberFormatException e) {
+            if (sol.charAt(0) == '-') {
+                return Integer.MIN_VALUE;
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+    }
+}
