@@ -1,0 +1,32 @@
+int* acmTeam(int topic_count, char** topic, int* result_count) {
+    int count = 0, team = 0,c = 0,d = 1,max = 0,_total = (topic_count*(topic_count - 1))/2;
+    for (int i = 0;i < _total;i++) {
+        for (int j = 0;j < strlen(topic[0]);j++) {
+            if ((topic[c][j] == '1' && topic[d][j] == '1') || (topic[c][j] == '1' && topic[d][j] == '0') || (topic[c][j] == '0' && topic[d][j] == '1')) {
+                count++;
+            }
+        }
+        if (d == topic_count-1) {
+            c++;
+            d = c + 1;
+        }else {
+            d++;
+        }
+        if (max < count) {
+            max = count;
+            team = 1;
+            count = 0;
+        }
+        if (max == count) {
+            team++;
+        }
+        count = 0;
+
+    }
+    *result_count = 2;
+    int* result = (int*)malloc((*result_count)*sizeof(int));
+    result[0] = max;
+    result[1] = team;
+    return result;
+
+}
