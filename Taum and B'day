@@ -1,0 +1,11 @@
+def taumBday(b, w, bc, wc, z):
+    # Write your code here
+    if bc>wc+z:
+        x=(w+b)*wc+b*z
+        return x
+    elif wc>bc+z:
+        y=(b+w)*bc+w*z
+        return y
+    else:
+        z=b*bc+w*wc
+        return z
