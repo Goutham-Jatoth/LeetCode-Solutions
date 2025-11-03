@@ -1,0 +1,11 @@
+def jumpingOnClouds(c):
+    # Write your code here
+    n = len(c)
+    walks = 0
+    last_thunderhead = -1
+    for i in range(n):
+        if c[i]:
+            if (i - last_thunderhead)%2:
+                walks += 1
+            last_thunderhead = i
+    return math.floor((n + walks)/2)
